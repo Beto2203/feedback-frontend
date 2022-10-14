@@ -1,50 +1,28 @@
+import { MdOutlineFreeCancellation } from 'react-icons/md';
+import FeedbackCard from './FeedbackCard.js';
+import Tag from './Tag.js';
 import { useState } from 'react';
-import { MdArrowUpward } from 'react-icons/md';
+import FeedbackForm from './FeedbackForm';
+import { Link, useNavigate } from 'react-router-dom';
 
-function FeedbackCard({ feedback }) {
-  const { title, likes, content, tag } = feedback;
+function MainScreen({ feedbacks, tags, selectTag, tagHandler, sortType, selectSortHandler, setFeedbacks, user }) {
+  const [showForm, setShowForm] = useState(false);
 
+  const navigate = useNavigate();
 
-  const likeHandler = (e) => {
-    e.stopPropagation();
-    console.log('LIKEEE');
+  const hideForm = () => {
+    setShowForm(false);
+    document.body.classList.remove('preventScroll');
   };
 
-  const clickFeedback = () => {
-    console.log('FEEED');
-  };
-
-  return (
-    <div className="feedbackCard card" onClick={clickFeedback}>
-      <div className="likes" onClick={likeHandler}>
-        <i>{MdArrowUpward()}</i>
-        {likes}
-      </div>
-
-      <div className="cardContent">
-        <h4>{title}</h4>
-        <p>{content}</p>
-        <div>{tag}</div>
-      </div>
-
-      <div className="comments">
-        comments
-      </div>
-    </div>
-  );
-}
-
-function Tag() {
-
-  return (
-    <div className="tag">
-
-    </div>
-  );
-}
-
-function MainScreen() {
-  const [sortType, setSortType] = useState('0');
+  const activateForm = () => {
+    if (user) {
+      setShowForm(true);
+      document.body.classList.add('preventScroll');
+    }
+    else
+      navigate('/login')
+  }
 
   const sortOptions = [
     (a, b) => a.id - b.id,
@@ -52,66 +30,61 @@ function MainScreen() {
     (a, b) => b.comments.length - a.comments.length,
     (a, b) => a.comments.length - b.comments.length
   ];
-  const selectSortHandler = (e) => {
-    setSortType(e.target.value);
-  };
 
-  const feedbacks = [
-    {
-      title: 'Add tags for solutions',
-      content: 'Easier to search for solutions based on a specific stack fasdfasasfsdfsafdsdassdf  sdfsdf sdf asfdsdddddddddddddddddddddddddddddddddddddddddddddddddddddddddf asdf sfd asdf  asfasfasfsfdasfasfsfsd f  sdfasf dsfa sdfaasfd sadf safasfasfdsafdasdfas.',
-      tag: 'Feature',
-      likes: 47,
-      comments: [],
-      id: 1
-    },
-    {
-      title: 'Enable dark mode',
-      content: 'Easier to search for  based on a specific stackf dsfa sdfaasfd sadf .',
-      tag: 'UI',
-      likes: 22,
-      comments: [1,2],
-      id: 2
-    }
-  ];
   feedbacks.sort(sortOptions[sortType]);
 
   return (
     <div className="mainScreen">
       <section className="menu">
-        <div className="card" id="title">
+        <div className="card" id="cardTitle">
           Feedback Board
+          <div id="cardSubtitle">
+            {
+              user
+                ? `Welcome ${user.name}`
+                : <Link to="/login">Sign in</Link>
+            }
+          </div>
+
         </div>
-        <div className="card">
-          All UI, UX
+        <div className="card tagContainer">
+          {
+            tags.map(tag => <Tag key={tag} tagName={tag} classes={`tag menuTag ${tag === selectTag && 'selectedTag'}`}
+                                 tagHandler={tagHandler} />)
+          }
         </div>
       </section>
 
       <main>
         <header>
-          <div>
-            {feedbacks.length} Suggestions
+          <div className="suggestions">
+            {MdOutlineFreeCancellation()} {feedbacks.length} Suggestions
           </div>
 
           <div>
             <label htmlFor="sort">Sort by : </label>
-            <select name="sort" id="sort" onInput={selectSortHandler} defaultValue="0">
+            <select name="sort" id="sort" onInput={selectSortHandler} defaultValue={sortType}>
               <option value="0">Most Upvotes</option>
               <option value="1">Least Upvotes</option>
               <option value="2">Most Comments</option>
               <option value="3">Least Comments</option>
             </select>
-
           </div>
 
-          <button type="button" className="addFeedback">
+          <button type="button" className="addFeedback" onClick={activateForm}>
             + Add Feedback
           </button>
         </header>
-        {feedbacks.map(feedback => <FeedbackCard key={feedback.id} feedback={feedback} />)}
-        <section className="feedback">
-        </section>
+
+        {
+          feedbacks.filter(feedback => selectTag === 'All' || feedback.tag === selectTag)
+            .map(feedback => <FeedbackCard key={feedback.id} feedback={feedback} />)
+        }
       </main>
+
+      {
+        showForm && <FeedbackForm tags={tags} hideForm={hideForm} feedbacks={feedbacks} setFeedbacks={setFeedbacks} />
+      }
     </div>
   );
 }
