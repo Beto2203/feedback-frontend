@@ -1,0 +1,40 @@
+#loginScreen h1 {
+  text-align: center;
+}
+
+#loginScreen{
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  margin: auto;
+}
+
+#loginForm {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+#loginForm form {
+  gap: 15px;
+}
+
+#loginForm button {
+  height: 40px;
+}
+
+.alert {
+  font-size: 10px;
+  padding: 0 10px;
+  margin-top: -10px;
+}
+
+#loginForm input {
+  width: 200px;
+}
+
+#loginForm a {
+  color: #a855f7;
+}

@@ -1,0 +1,148 @@
+.mainScreen {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  gap: 30px;
+}
+@media (max-width: 1100px) {
+  .mainScreen {
+    grid-template-columns: 1fr;
+  }
+}
+
+.menu {
+  display: grid;
+  grid-template-rows: 100px;
+  grid-gap: 20px;
+}
+@media (max-width: 1100px)  {
+  .menu {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+}
+
+#cardTitle {
+  background:
+    linear-gradient(red, transparent),
+    linear-gradient(to top left, lime, transparent),
+    linear-gradient(to top right, blue, transparent);
+  background-blend-mode: screen;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: end;
+  padding: 20px;
+}
+#cardTitle a {
+  font-size: 12px;
+  margin: 5px;
+}
+
+#cardTitle a:hover {
+  color: orange;
+}
+
+#cardSubtitle {
+  margin-top: 5px;
+  font-size: 15px;
+}
+
+.tagContainer {
+  float: left;
+  align-self: start;
+  white-space: pre-wrap;
+}
+
+.tag {
+  user-select: none;
+  background-color: #f0f9ff;
+  border-radius: 10px;
+  padding: 7px;
+  color: #2563eb;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  margin: 5px;
+}
+
+.menuTag:hover, .menuTag:active, .selectedTag {
+  background-color: #2563eb;
+  color: white;
+}
+
+main {
+  display: grid;
+  gap: 20px;
+}
+@media (max-width: 650px) {
+  main {
+    gap: 50px;
+  }
+}
+
+header {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  background-color: #0c4a6e;
+  color: white;
+  font-weight: bold;
+  height: 40px;
+  padding: 20px;
+  border-radius: 10px;
+  align-items: center;
+  user-select: none;
+}
+@media (max-width: 1000px) {
+  header {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media (max-width: 400px) {
+  header {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.suggestions {
+  font-size: 20px;
+}
+#sort {
+  background-color: #0c4a6e;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  display: inline;
+}
+@media (max-width: 600px) {
+  .suggestions {
+    font-size: 14px;
+  }
+  header label {
+    font-size: 12px;
+  }
+  #sort {
+    font-size: 12px;
+  }
+  .addFeedback {
+    font-size: 12px;
+  }
+}
+@media (max-width: 400px) {
+  .suggestions {
+    display: none;
+  }
+}
+
+.logOut {
+  font-size: 12px;
+  margin-top: 5px;
+  margin-bottom: -5px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.logOut:hover {
+  color: orange;
+}

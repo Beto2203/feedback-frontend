@@ -1,0 +1,83 @@
+.feedbackCard {
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+}
+@media (max-width: 800px) {
+  .feedbackCard {
+    grid-template-columns: 2fr 2fr;
+    grid-template-rows: 2fr 1fr;
+  }
+  .cardContent {
+    grid-column: 1 / -1;
+  }
+  .likes {
+    grid-row: 2;
+    width: 10%;
+  }
+}
+
+.feedbackCardText {
+  width: 500px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+@media (max-width: 600px) {
+  .feedbackCardText {
+    width: 400px;
+  }
+}
+@media (max-width: 500px) {
+  .feedbackCardText {
+    width: 200px;
+  }
+}
+
+.cardContent {
+  margin-bottom: 10px;
+}
+
+.likes {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  background-color: #e0f2fe;
+  font-weight: bold;
+  border-radius: 5px;
+  border: 1px solid rgba(211, 211, 211, 0.6);
+  width: 30%;
+  height: 50%;
+}
+@media (max-width: 800px) {
+  .likes {
+    grid-row: 2;
+    width: 25%;
+    height: 90%;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+.likes:hover {
+  color: #0284c7;
+}
+
+.likes,
+.comments {
+  justify-self: center;
+  user-select: none;
+}
+
+.comments {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.backHome {
+  margin-bottom: 20px;
+}

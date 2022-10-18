@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import './styles/MainScreen.css'
+import './styles/FeedbackCard.css'
+import './styles/FeedbackForm.css'
+import './styles/LoginForm.css'
 import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
 
