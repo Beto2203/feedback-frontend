@@ -1,5 +1,6 @@
 import Tag from './Tag.js';
 import { useState } from 'react';
+import { create } from '../Services/feedbacks';
 
 function FormTag({ tag, setTagForm }) {
 
@@ -17,8 +18,15 @@ function FeedbackForm({ tags, hideForm, feedbacks, setFeedbacks }) {
   const [description, setDescription] = useState('');
   const [tagForm, setTagForm] = useState('');
 
-  const submitFormHandler = () => {
-    setFeedbacks([{title, content: description, likes: 0, tag: tagForm, comments: [], id: feedbacks.length+1}, ...feedbacks]);
+  const submitFormHandler = async () => {
+    const feedback = {
+      title,
+      content: description,
+      tag: tagForm
+    };
+
+    const res = await create(feedback);
+    setFeedbacks(feedbacks.concat(res))
     setTitle('');
     setDescription('');
     setTagForm('');
@@ -26,7 +34,7 @@ function FeedbackForm({ tags, hideForm, feedbacks, setFeedbacks }) {
   };
 
   const titleHandler = (e) => {
-    setTitle(e.target.value)
+    setTitle(e.target.value);
   };
 
   const titleClasses = (title.length > 2 || title.length === 0) ? 'card' : 'card invalid';
@@ -43,7 +51,7 @@ function FeedbackForm({ tags, hideForm, feedbacks, setFeedbacks }) {
                  id="title"
                  value={title}
                  className={titleClasses}
-                 onInput={titleHandler}
+                 onChange={titleHandler}
           />
 
           <label htmlFor="description">Description</label>
@@ -51,7 +59,7 @@ function FeedbackForm({ tags, hideForm, feedbacks, setFeedbacks }) {
                     id="description"
                     value={description}
                     className="card"
-                    onInput={(e) => setDescription(e.target.value)}
+                    onChange={(e) => setDescription(e.target.value)}
                     placeholder="Add a description here">
         </textarea>
 
