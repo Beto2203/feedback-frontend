@@ -1,19 +1,25 @@
 import { MdArrowUpward, MdComment } from 'react-icons/md';
 import Tag from './Tag.js';
 import { Link } from 'react-router-dom';
+import { likeFeedback } from '../Services/feedbacks.js';
+import { useState } from 'react';
 
-function FeedbackCard({ feedback, showFullCard }) {
+function FeedbackCard({ feedback, showFullCard, updateLikes }) {
   const { title, likes, content, tag, comments, id } = feedback;
+  const [likesLength, setLikesLength] = useState(likes.length);
 
-  const likeHandler = (e) => {
+  const likeHandler = async (e) => {
     e.preventDefault();
-    console.log('LIKEEE');
+    const alreadyLiked = updateLikes(id);
+    if (alreadyLiked) setLikesLength(likesLength - 1);
+    else setLikesLength(likesLength + 1)
+    await likeFeedback(id);
   };
 
   const cardBody = <>
     <div className="likes" onClick={likeHandler}>
       <i>{MdArrowUpward()}</i>
-      {likes}
+      {likesLength}
     </div>
     <div className="cardContent">
       <h4>{title}</h4>
