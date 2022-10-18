@@ -5,7 +5,7 @@ import { useState } from 'react';
 import FeedbackForm from './FeedbackForm';
 import { Link, useNavigate } from 'react-router-dom';
 
-function MainScreen({ feedbacks, tags, selectTag, tagHandler, sortType, selectSortHandler, setFeedbacks, user }) {
+function MainScreen({ feedbacks, tags, selectTag, tagHandler, sortType, selectSortHandler, setFeedbacks, user, updateLikes }) {
   const [showForm, setShowForm] = useState(false);
 
   const navigate = useNavigate();
@@ -25,13 +25,18 @@ function MainScreen({ feedbacks, tags, selectTag, tagHandler, sortType, selectSo
   }
 
   const sortOptions = [
-    (a, b) => a.id - b.id,
-    (a, b) => b.id - a.id,
+    (a, b) => b.likes.length - a.likes.length,
+    (a, b) => a.likes.length - b.likes.length,
     (a, b) => b.comments.length - a.comments.length,
     (a, b) => a.comments.length - b.comments.length
   ];
 
   feedbacks.sort(sortOptions[sortType]);
+
+  const logoutHandler = () => {
+    window.localStorage.removeItem('userFeedbackBlogCredentials');
+    window.location.reload();
+  }
 
   return (
     <div className="mainScreen">
@@ -41,8 +46,11 @@ function MainScreen({ feedbacks, tags, selectTag, tagHandler, sortType, selectSo
           <div id="cardSubtitle">
             {
               user
-                ? `Welcome ${user.name}`
+                ? `Welcome ${user.username}`
                 : <Link to="/login">Sign in</Link>
+            }
+            {
+              user && <div className="logOut" onClick={logoutHandler}>Log out</div>
             }
           </div>
 
@@ -78,7 +86,7 @@ function MainScreen({ feedbacks, tags, selectTag, tagHandler, sortType, selectSo
 
         {
           feedbacks.filter(feedback => selectTag === 'All' || feedback.tag === selectTag)
-            .map(feedback => <FeedbackCard key={feedback.id} feedback={feedback} />)
+            .map(feedback => <FeedbackCard key={feedback.id} feedback={feedback} updateLikes={updateLikes} />)
         }
       </main>
 
