@@ -36,4 +36,13 @@ const likeFeedback = async (id) => {
   return res.data;
 };
 
-export { getAll, create, setToken, remove, likeFeedback };
+const addComment = async (id, comment) => {
+  const res = await axios.post(`${baseUrl}/${id}`,  {comment}, config());
+  return res.data;
+};
+
+const removeComment = async (feedbackId, id) => {
+  await axios.delete(`${baseUrl}/${feedbackId}/${id}`, config());
+};
+
+export { getAll, create, setToken, remove, likeFeedback, addComment, removeComment };
