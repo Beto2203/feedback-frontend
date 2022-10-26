@@ -17,7 +17,7 @@ function FeedbackCard({ feedback, showFullCard, updateLikes }) {
   };
 
   const cardBody = <>
-    <div className="likes" onClick={likeHandler}>
+    <div className={`likes ${showFullCard ? 'start' : ''}`} onClick={likeHandler}>
       <i>{MdArrowUpward()}</i>
       {likesLength}
     </div>
@@ -27,7 +27,7 @@ function FeedbackCard({ feedback, showFullCard, updateLikes }) {
       <Tag tagName={tag} classes={"tag"} />
     </div>
 
-    <div className="comments">
+    <div className={`comments ${showFullCard ? 'start' : ''}`}>
       {MdComment()} {comments.length}
     </div>
   </>
