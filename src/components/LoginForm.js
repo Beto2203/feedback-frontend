@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from '../Services/login.js';
 import { createUser } from '../Services/users.js';
 import { setToken } from '../Services/feedbacks';
@@ -9,6 +9,8 @@ function LoginForm({ setUser, title, signUp }) {
   const [password, setPassword] = useState('');
   const [success, setSuccess] = useState(true);
   const [errorMessage, setErrorMessage] = useState('Invalid input');
+
+  const navigate = useNavigate();
 
   const submitHandler = async () => {
     if (success) {
@@ -20,6 +22,7 @@ function LoginForm({ setUser, title, signUp }) {
       if (signUp) {
         try {
           await createUser(user);
+          navigate('/login');
         } catch (err) {
           const res = err.response;
           setErrorMessage(res.data.error);
