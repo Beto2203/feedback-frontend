@@ -62,6 +62,24 @@ function App() {
     return alreadyLiked;
   };
 
+  const updateComments = (id, comment, removeComment) => {
+    if (removeComment) {
+      const feedback = feedbacks.find(f => f.id === id);
+
+      feedback.comments = feedback.comments.filter(c => c.id !== comment.id);
+      const newFeedbacks = feedbacks.map(f => (f.id === id) ? feedback : f);
+      setFeedbacks(newFeedbacks);
+    } else {
+      const feedback = feedbacks.find(f => f.id === id);
+
+      feedback.comments = feedback.comments.concat(comment);
+      const newFeedbacks = feedbacks.map(f => (f.id === id) ? feedback : f);
+      setFeedbacks(newFeedbacks);
+      console.log(feedback.comments);
+    }
+
+  };
+
   return (
     <>
       <Routes>
@@ -77,8 +95,15 @@ function App() {
                       updateLikes={updateLikes}
           />}
         />
-        <Route path="/feedbackBlog/:id" element={user ? <FeedbackBlog feedback={feedback} updateLikes={updateLikes} /> : <Navigate replace to="/login" />} />
+        <Route path="/feedbackBlog/:id" element={user ? <FeedbackBlog
+          feedback={feedback}
+          updateLikes={updateLikes}
+          updateComments={updateComments}
+          user={user} /> : <Navigate replace to="/login" />}
+        />
+
         <Route path="/login" element={!user ? <LoginForm user={user} setUser={setUser} title="Sign in" /> : <Navigate replace to="/" />} />
+
         <Route path="/signup" element={!user ? <LoginForm user={user} setUser={setUser} title="Sign up" signUp={true} /> : <Navigate replace to="/" />} />
       </Routes>
     </>
