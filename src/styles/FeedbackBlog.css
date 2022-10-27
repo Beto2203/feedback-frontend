@@ -47,7 +47,10 @@
   padding: 5px;
   display: grid;
   grid-template-columns: 10fr 1fr;
+}
 
+.comment h3 {
+  font-size: 15px;
 }
 
 .removeComment {
