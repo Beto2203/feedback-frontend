@@ -86,7 +86,7 @@ function MainScreen({ feedbacks, tags, selectTag, tagHandler, sortType, selectSo
 
         {
           feedbacks.filter(feedback => selectTag === 'All' || feedback.tag === selectTag)
-            .map(feedback => <FeedbackCard key={feedback.id} feedback={feedback} updateLikes={updateLikes} />)
+            .map(feedback => <FeedbackCard key={feedback.id} feedback={feedback} updateLikes={updateLikes} user={user} />)
         }
       </main>
 
