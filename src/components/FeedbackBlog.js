@@ -67,7 +67,7 @@ function FeedbackBlog({ feedback, updateLikes, updateComments, user }) {
       }
 
       <div className="blogContent">
-        <FeedbackCard feedback={feedback} showFullCard={true} updateLikes={updateLikes} />
+        <FeedbackCard feedback={feedback} showFullCard={true} updateLikes={updateLikes} user={user}/>
       </div>
 
       <div className="commentSection card">
