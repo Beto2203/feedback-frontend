@@ -7,7 +7,7 @@ import { useState } from 'react';
 function FeedbackCard({ feedback, showFullCard, updateLikes, user }) {
   const { title, likes, content, tag, comments, id } = feedback;
   const [likesLength, setLikesLength] = useState(likes.length);
-  const [liked, setLiked] = useState(likes.includes(user.id));
+  const [liked, setLiked] = useState(likes.includes(user && user.id));
 
   const likeHandler = async (e) => {
     e.preventDefault();
