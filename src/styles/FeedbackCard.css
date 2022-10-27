@@ -79,3 +79,7 @@
 .start {
   align-self: start;
 }
+
+.liked {
+  color: #009aef;
+}
